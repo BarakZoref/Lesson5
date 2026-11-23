@@ -4,9 +4,11 @@ from PySide6.QtWidgets import (
     QAbstractSpinBox,
     QApplication,
     QHBoxLayout,
+    QLabel,
     QMainWindow,
     QPushButton,
     QSlider,
+    QSizePolicy,
     QSpinBox,
     QVBoxLayout,
     QWidget,
@@ -40,6 +42,13 @@ class MainWindow(QMainWindow):
         self.slider.setRange(0, 255)
         self.slider.valueChanged.connect(self.slider_method)
 
+        self.label = QLabel()
+        self.label.setMinimumWidth(100)
+        self.label.setSizePolicy(
+            QSizePolicy.Policy.Preferred,
+            QSizePolicy.Policy.Expanding,
+        )
+
         self.toggle_button = QPushButton("Start")
         self.toggle_button.setCheckable(True)
         self.toggle_button.toggled.connect(self.button_method)
@@ -53,8 +62,10 @@ class MainWindow(QMainWindow):
         slider_layout.addWidget(self.slider, alignment=Qt.AlignmentFlag.AlignHCenter)
 
         layout = QHBoxLayout()
+        layout.setContentsMargins(0, 0, 0, 0)
         layout.addLayout(controls_layout)
         layout.addLayout(slider_layout)
+        layout.addWidget(self.label)
 
         central_widget = QWidget()
         central_widget.setLayout(layout)
