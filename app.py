@@ -42,12 +42,13 @@ class MainWindow(QMainWindow):
         self.slider.setRange(0, 255)
         self.slider.valueChanged.connect(self.slider_method)
 
-        self.label = QLabel()
-        self.label.setMinimumWidth(100)
-        self.label.setSizePolicy(
+        self.color_box = QLabel()
+        self.color_box.setMinimumWidth(100)
+        self.color_box.setSizePolicy(
             QSizePolicy.Policy.Preferred,
             QSizePolicy.Policy.Expanding,
         )
+        self.color_box.setStyleSheet('background-color:rgb(0,0,0)')
 
         self.toggle_button = QPushButton("Start")
         self.toggle_button.setCheckable(True)
@@ -62,10 +63,9 @@ class MainWindow(QMainWindow):
         slider_layout.addWidget(self.slider, alignment=Qt.AlignmentFlag.AlignHCenter)
 
         layout = QHBoxLayout()
-        layout.setContentsMargins(0, 0, 0, 0)
         layout.addLayout(controls_layout)
         layout.addLayout(slider_layout)
-        layout.addWidget(self.label)
+        layout.addWidget(self.color_box)
 
         central_widget = QWidget()
         central_widget.setLayout(layout)
@@ -88,6 +88,7 @@ class MainWindow(QMainWindow):
     def slider_method(self):
         value = self.slider.value()
         self.slider_spin_box.setValue(value)
+        self.color_box.setStyleSheet(f'background-color:rgb({value},{value},{value})')
 
 
 def main() -> None:
